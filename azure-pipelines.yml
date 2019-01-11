@@ -36,7 +36,7 @@ jobs:
       $config = Get-Content $(Build.SourcesDirectory)\vss-extension.json -raw | ConvertFrom-Json
       Write-Host "Original Config File"
       Write-Host $config
-      $config.version = $env:VERSION
+      $config.version = "$env:VERSION"
       Write-Host "Updated Config File"
       Write-Host "$config"
       $config | ConvertTo-Json | Set-Content $(Build.SourcesDirectory)\vss-extension.json
