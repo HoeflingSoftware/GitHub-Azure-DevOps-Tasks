@@ -10,8 +10,10 @@ trigger:
       - refs/tags/*
 
 variables:
-  seedversion: "1.0.2"
-  version: "$[counter('$(seedversion)', 0)]"
+  major: 1
+  minor: 0
+  patch: 2
+  revision: "$[counter('$(major).$(minor).$(patch)', 0)]"
   system.debug: "true"
   githubOrganization: 'HoeflingSoftware'
   githubRepo: 'GitHub-Azure-DevOps-Tasks'
@@ -39,7 +41,7 @@ jobs:
       Write-Host "$config"
       $config | ConvertTo-Json -Depth 10 | Set-Content $(Build.SourcesDirectory)\vss-extension.json
     env:
-      VERSION: "$(seedversion).$(version)"
+      VERSION: "$(major).$(minor).$(patch).$(revision)"
     displayName: Update Version Number
 
   - powershell: 'tfx extension create --manifest-globs $(Build.SourcesDirectory)\vss-extension.json'
