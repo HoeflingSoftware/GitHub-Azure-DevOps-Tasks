@@ -22,7 +22,9 @@ try {
 
     Write-Host $uploadUrl
 
-    $response = Invoke-WebRequest $uploadUrl -Method POST -Body $artifact_file -Headers @{"Authorization"="token $github_token"; "Accept"="application/vnd.github.v3+json"; "Content-Type"="application/zip"}
+    $fileBinary = [IO.File]::ReadAllBytes($artifact_file)
+
+    $response = Invoke-WebRequest $uploadUrl -Method POST -Body $fileBinary -Headers @{"Authorization"="token $github_token"; "Accept"="application/vnd.github.v3+json"; "Content-Type"="application/zip"}
     Write-Host $response | ConvertFrom-Json
 
     Write-Host "Upload completed successfully"
