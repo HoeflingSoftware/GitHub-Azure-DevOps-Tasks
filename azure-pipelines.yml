@@ -91,7 +91,7 @@ jobs:
       TOKEN: $(githubToken)
     displayName: 'Update CHANGELOG.md'
 
-  - powershell: Compress-Archive $(System.DefaultWorkingDirectory)\*.vsix "$(githubRepo)_$env:VERSION.zip"
+  - powershell: 'Compress-Archive $(System.DefaultWorkingDirectory)\*.vsix "$(System.DefaultWorkingDirectory)\$(githubRepo)_$env:VERSION.zip"'
     env:
       VERSION: $(major).$(minor).$(patch).$(revision)
     displayName: Create Zip for GitHub Release Artifacts
