@@ -1,7 +1,7 @@
 {
 	"manifestVersion": 1,
 	"id": "GitHubTasks",
-	"version": "1.0.1",
+	"version": "1.0.0",
 	"name": "GitHub Azure DevOps Tasks",
 	"description": "A suite of Azure DevOps tasks for GitHub",
 	"publisher": "hoefling-software",
