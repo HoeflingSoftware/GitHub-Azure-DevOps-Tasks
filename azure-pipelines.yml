@@ -91,11 +91,16 @@ jobs:
       TOKEN: $(githubToken)
     displayName: 'Update CHANGELOG.md'
 
+  - powershell: Compress-Archive $(System.DefaultWorkingDirectory)\*.vsix "$(githubRepo)_$env:VERSION_.zip"
+    env:
+      VERSION: $(major).$(minor).$(patch).$(revision)
+    displayName: Create Zip for GitHub Release Artifacts
+
   - task: hoefling-software.GitHubTasks.GitHubPublishReleaseArtifact.GitHubPublishReleaseArtifact@1
     displayName: GitHubReleaseArtifact
     inputs:
       githubRepo: $(githubRepo)
       githubOrganization: $(githubOrganization)
       githubToken: $(githubToken)
-      artifact: '*.vsix'
+      artifact: '$(System.DefaultWorkingDirectory)\*.zip'
       artifactDisplayName: 'GitHubTasks-$(major).$(minor).$(patch).$(revision).zip'
