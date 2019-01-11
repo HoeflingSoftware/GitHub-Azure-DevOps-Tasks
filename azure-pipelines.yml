@@ -11,10 +11,8 @@ trigger:
 
 variables:
   # when updating the version number update the number in the 'revision' counter
-  major: 1
-  minor: 0
-  patch: 3
-  revision: "$[counter('1.0.3', 0)]"
+  majorMinorPatch: 1.0.3
+  revision: "$[counter(variables['majorMinorPatch'], 0)]"
   system.debug: "true"
   githubOrganization: 'HoeflingSoftware'
   githubRepo: 'GitHub-Azure-DevOps-Tasks'
@@ -31,7 +29,7 @@ jobs:
       $version = $[counter('$seed', 0)]
       Write-Host $version
     displayName: Version Sandbox
-    
+
   - task: Npm@1
     displayName: 'npm install Azure DevOps CLI'
     inputs:
