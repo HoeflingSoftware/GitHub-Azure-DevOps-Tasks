@@ -34,7 +34,11 @@ jobs:
 
   - powershell: |
       $config = Get-Content $(Build.SourcesDirectory)\vss-extension.json -raw | ConvertFrom-Json
+      Write-Host "Original Config File"
+      Write-Host $config
       $config.version = $(major).$(minor).$(patch).$(revision)
+      Write-Host "Updated Config File"
+      Write-Host "$config"
       $config | ConvertTo-Json | Set-Content $(Build.SourcesDirectory)\vss-extension.json
     displayName: Update Version Number
 
