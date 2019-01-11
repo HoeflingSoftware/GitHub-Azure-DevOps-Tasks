@@ -72,7 +72,7 @@ jobs:
     displayName: 'Download Build Artifacts'
     inputs:
       artifactName: drop
-      downloadPath: $(System.DefaultWorkingDirectory) 
+      downloadPath: $(System.DefaultWorkingDirectory)/artifacts
 
   - task: Npm@1
     displayName: 'npm install github-release-notes'
@@ -94,7 +94,7 @@ jobs:
   - task: ArchiveFiles@2
     displayName: 'Archive VSIX'
     inputs:
-      rootFolderOrFile: '$(System.DefaultWorkingDirectory)/*.vsix'
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)/artifacts'
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(major).$(minor).$(patch).$(revision).zip'
 
   - task: hoefling-software.GitHubTasks.GitHubPublishReleaseArtifact.GitHubPublishReleaseArtifact@1
