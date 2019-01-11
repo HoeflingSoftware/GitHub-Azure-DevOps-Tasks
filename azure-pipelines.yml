@@ -98,7 +98,7 @@ jobs:
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(major).$(minor).$(patch).$(revision).zip'
 
   - task: hoefling-software.GitHubTasks.GitHubPublishReleaseArtifact.GitHubPublishReleaseArtifact@1
-    displayName: GitHubReleaseArtifact
+    displayName: Publish GitHub Release Artifact
     inputs:
       githubRepo: $(githubRepo)
       githubOrganization: $(githubOrganization)
