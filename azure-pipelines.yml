@@ -11,7 +11,7 @@ trigger:
 
 variables:
   seedversion: "1.0.2"
-  version: "$(seedversion).$($[counter('$(seedversion)', 0)])"
+  version: "$[counter('$(seedversion)', 0)]"
   system.debug: "true"
   githubOrganization: 'HoeflingSoftware'
   githubRepo: 'GitHub-Azure-DevOps-Tasks'
@@ -39,7 +39,7 @@ jobs:
       Write-Host "$config"
       $config | ConvertTo-Json -Depth 10 | Set-Content $(Build.SourcesDirectory)\vss-extension.json
     env:
-      VERSION: $(version)
+      VERSION: $(seedversion).$(version)
     displayName: Update Version Number
 
   - powershell: 'tfx extension create --manifest-globs $(Build.SourcesDirectory)\vss-extension.json'
