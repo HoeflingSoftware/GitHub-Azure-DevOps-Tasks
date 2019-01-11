@@ -10,7 +10,7 @@ trigger:
       - refs/tags/*
 
 variables:
-  major: 1
+  major: 0
   minor: 0
   patch: 0
   revision: $[counter('versioncounter', 0)]
