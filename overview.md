@@ -1,5 +1,5 @@
 # Publish Release Artifact Task #
-This needs some love
+A simple task for publishing Release Artifacts to your latest github release
 
 # Support Build Enviornments #
 Windows

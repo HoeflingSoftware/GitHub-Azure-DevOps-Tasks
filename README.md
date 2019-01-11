@@ -4,7 +4,7 @@ A suite of build tasks focused on helping automate GitHub Releases
 # Getting Started
 This needs to be updated
 
-1. Goto VSTS Marketplace and find the DNN Module Set Version Extension [https://marketplace.visualstudio.com/items?itemName=hoefling-software.SetVersionDNN](https://marketplace.visualstudio.com/items?itemName=hoefling-software.SetVersionDNN)
+1. Goto Visual Studio Marketplace and find the Azure DevOps Tasks Extension [[https://github.com/HoeflingSoftware/GitHub-Azure-DevOps-Tasks](https://github.com/HoeflingSoftware/GitHub-Azure-DevOps-Tasks)
 2. Install module to your VSTS Instance
 3. Add Task to your build and configure parameters
 4. Run build
