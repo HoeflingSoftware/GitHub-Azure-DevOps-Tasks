@@ -1,0 +1,42 @@
+{
+	"manifestVersion": 1,
+	"id": "SetVersionDNN",
+	"version": "0.0.23",
+	"name": "DNN Module Set Version",
+	"description": "A VSTS Build extension that will set the version number of a DNN (DotNetNuke) Module",
+	"publisher": "hoefling-software",
+	"public": true,
+	"targets": [
+		{
+			"id": "Microsoft.VisualStudio.Services"
+			}
+		],
+	"categories": [
+		"Build and release"
+	],
+	"icons": {
+		"default": "icon.png"
+	 },
+	"content":{
+		"details":{
+			"path": "overview.md"
+		}
+	},
+	"contributions": [
+		{
+			"id": "SetVersionDNN",
+			"type": "ms.vss-distributed-task.task",
+			"targets": [
+				"ms.vss-distributed-task.tasks"
+			],
+			"properties": {
+				"name": "buildtask"
+			}
+		}
+	],
+	"files":[
+		{
+			"path": "buildtask"	
+		}
+	]
+}
