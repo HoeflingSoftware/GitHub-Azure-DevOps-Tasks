@@ -40,7 +40,7 @@ jobs:
       Write-Host "$config"
       $config | ConvertTo-Json -Depth 10 | Set-Content $(Build.SourcesDirectory)\vss-extension.json
     env:
-      VERSION: "$(major).$(minor).$(patch).$(revision)"
+      VERSION: "$(majorMinorPatch).$(revision)"
     displayName: Update Version Number
 
   - powershell: 'tfx extension create --manifest-globs $(Build.SourcesDirectory)\vss-extension.json'
@@ -94,7 +94,7 @@ jobs:
     displayName: 'Archive VSIX'
     inputs:
       rootFolderOrFile: '$(System.DefaultWorkingDirectory)/artifacts/drop'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(major).$(minor).$(patch).$(revision).zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(majorMinorPatch).$(revision).zip'
 
   - task: hoefling-software.GitHubTasks.GitHubPublishReleaseArtifact.GitHubPublishReleaseArtifact@1
     displayName: Publish GitHub Release Artifact
@@ -102,5 +102,5 @@ jobs:
       githubRepo: $(githubRepo)
       githubOrganization: $(githubOrganization)
       githubToken: $(githubToken)
-      artifact: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(major).$(minor).$(patch).$(revision).zip'
-      artifactDisplayName: 'GitHubTasks-$(major).$(minor).$(patch).$(revision).zip'
+      artifact: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(majorMinorPatch).$(revision).zip'
+      artifactDisplayName: 'GitHubTasks-$(majorMinorPatch).$(revision).zip'
