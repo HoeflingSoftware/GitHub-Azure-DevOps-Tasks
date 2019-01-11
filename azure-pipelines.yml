@@ -94,7 +94,7 @@ jobs:
   - task: ArchiveFiles@2
     displayName: 'Archive VSIX'
     inputs:
-      rootFolderOrFile: '$(System.DefaultWorkingDirectory)/*.zip'
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)/*.vsix'
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(major).$(minor).$(patch).$(revision).zip'
 
   - task: hoefling-software.GitHubTasks.GitHubPublishReleaseArtifact.GitHubPublishReleaseArtifact@1
