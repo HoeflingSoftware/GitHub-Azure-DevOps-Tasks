@@ -22,10 +22,7 @@ jobs:
   pool: 
     name: Hosted VS2017
 
-  steps:
-  - powershell: Write-Host "##vso[task.setvariable variable=Build.BuildNumber]1.0.0$(Rev:r)"
-    displayName: Updating Build Version
-  
+  steps:  
   - task: Npm@1
     displayName: 'npm install Azure DevOps CLI'
     inputs:
@@ -42,7 +39,7 @@ jobs:
       Write-Host "$config"
       $config | ConvertTo-Json -Depth 10 | Set-Content $(Build.SourcesDirectory)\vss-extension.json
     env:
-      VERSION: $(Build.BuildNumber)
+      VERSION: $(version)
     displayName: Update Version Number
 
   - powershell: 'tfx extension create --manifest-globs $(Build.SourcesDirectory)\vss-extension.json'
@@ -96,7 +93,7 @@ jobs:
     displayName: 'Archive VSIX'
     inputs:
       rootFolderOrFile: '$(System.DefaultWorkingDirectory)/artifacts'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(Build.BuildNumber).zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(version).zip'
 
   - task: hoefling-software.GitHubTasks.GitHubPublishReleaseArtifact.GitHubPublishReleaseArtifact@1
     displayName: Publish GitHub Release Artifact
@@ -104,5 +101,5 @@ jobs:
       githubRepo: $(githubRepo)
       githubOrganization: $(githubOrganization)
       githubToken: $(githubToken)
-      artifact: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(Build.BuildNumber).zip'
-      artifactDisplayName: 'GitHubTasks-$(Build.BuildNumber).zip'
+      artifact: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(version).zip'
+      artifactDisplayName: 'GitHubTasks-$(version).zip'
