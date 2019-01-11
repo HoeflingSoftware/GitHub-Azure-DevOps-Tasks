@@ -4,16 +4,52 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+  branches:
+    include:
+      - master
+      - refs/tags/*
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+variables:
+  major: 1
+  minor: 0
+  patch: 0
+  revision: $[counter('versioncounter', 0)]
+  system.debug: "true"
+  githubOrganization: 'HoeflingSoftware'
+  githubRepo: 'GitHub-Azure-DevOps-Tasks'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+jobs:
+- job: Build
+  displayName: Build
+  pool: 
+    name: Hosted VS2017
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  steps:
+  - task: Npm@1
+    displayName: 'npm install Azure DevOps CLI'
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: 'install tfx-cli -g'
+
+  - powershell: |
+      $config = Get-Content $(Build.SourcesDirectory)\vss-extension.json -raw | ConvertFrom-Json
+      $config.version = $(major).$(minor).$(patch).$(revision)
+      $config | ConvertTo-Json | Set-Content $(Build.SourcesDirectory)\vss-extension.json
+    displayName: Update Version Number
+
+  - powershell: 'tfx extension create --manifest-globs $(Build.SourcesDirectory)\vss-extension.json'
+    displayName: 'Build Extension Installer'
+  
+  - task: CopyFiles@2
+    displayName: 'Copy Files to Artifacts Staging Directory'
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: '**/*.vsix'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      flattenFolders: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts: drop'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
