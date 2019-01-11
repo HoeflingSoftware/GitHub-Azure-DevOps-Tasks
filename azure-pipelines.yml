@@ -39,7 +39,7 @@ jobs:
       Write-Host "$config"
       $config | ConvertTo-Json -Depth 10 | Set-Content $(Build.SourcesDirectory)\vss-extension.json
     env:
-      VERSION: $(seedversion).$(version)
+      VERSION: "$(seedversion).$(version)"
     displayName: Update Version Number
 
   - powershell: 'tfx extension create --manifest-globs $(Build.SourcesDirectory)\vss-extension.json'
