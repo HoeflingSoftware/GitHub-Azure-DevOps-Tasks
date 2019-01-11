@@ -4,35 +4,29 @@ param()
 #Trace-VstsEnteringInvocation $MyInvocation
 try {
     # Get inputs.
-    $input_source = Get-VstsInput -Name 'sourceDirectory' -Require
-    $input_version = Get-VstsInput -Name 'moduleVersion' -Require
+    $github_repo = Get-VstsInput -Name 'githubRepo' -Require
+    $github_organization = Get-VstsInput -Name 'githubOrganization' -Require
+    $github_token = Get-VstsInput -Name 'githubToken' -Require
+    $artifact_file = Get-VstsInput -Name 'artifact' -Require
+    $artifact_display_name = Get-VstsInput -Name 'artifactDisplayName' -Require
 
-    # get all dnn manifest files based on the source
-    Write-Host "Finding all *.dnn manifest files recursively from $input_source"
-    $manifestFiles = Get-ChildItem $input_source -name -recurse *.dnn
 
-    Foreach ($manifest in $manifestFiles)
-    {
-        $path = "$input_source\$manifest"
-        Write-Host "Updating version information for $path . . ."
 
-        # load XML file
-        $xml = New-Object XML
-        $xml.Load($path)
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    $response = Invoke-Webrequest "https://api.github.com/repos/$github_organization/$github_repo/releases" -Headers @{"Authorization"="token $github_token"; "Accept"="application/vnd.github.v3+json"} 
+    $content = $response.Content | ConvertFrom-Json
 
-        # select node and update version
-        $nodes = $xml.SelectNodes("/dotnetnuke/packages/package")
-        $nodes.SetAttribute("version", $input_version)
+    $uploadUrl = $content[0].upload_url
+    $uploadUrl = $uploadUrl.Split("{")[0]
+    $uploadUrl = $uploadUrl + "?name=" + $artifact_display_name
 
-        $xml.Save($path)   
-    }
+    Write-Host $uploadUrl
 
-    Write-Host "Version number updated in all manifest file" 
+    $response = Invoke-WebRequest $uploadUrl -Method POST -Body $artifact_file -Headers @{"Authorization"="token $github_token"; "Accept"="application/vnd.github.v3+json"; "Content-Type"="application/zip"}
+    Write-Host $response | ConvertFrom-Json
 
-    # Fail if any errors.
-    # if ($failed) {
-    #     Write-VstsSetResult -Result 'Failed' -Message "Error detected" -DoNotThrow
-    # }
+    Write-Host "Upload completed successfully"
+
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation
 }

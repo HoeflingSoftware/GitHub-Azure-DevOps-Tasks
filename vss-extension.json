@@ -1,9 +1,9 @@
 {
 	"manifestVersion": 1,
-	"id": "SetVersionDNN",
-	"version": "0.0.23",
-	"name": "DNN Module Set Version",
-	"description": "A VSTS Build extension that will set the version number of a DNN (DotNetNuke) Module",
+	"id": "GitHubTasks",
+	"version": "1.0.0",
+	"name": "GitHub Azure DevOps Tasks",
+	"description": "A suite of Azure DevOps tasks for GitHub",
 	"publisher": "hoefling-software",
 	"public": true,
 	"targets": [
@@ -24,7 +24,7 @@
 	},
 	"contributions": [
 		{
-			"id": "SetVersionDNN",
+			"id": "GitHubPublishReleaseArtifact",
 			"type": "ms.vss-distributed-task.task",
 			"targets": [
 				"ms.vss-distributed-task.tasks"
