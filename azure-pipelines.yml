@@ -24,12 +24,6 @@ jobs:
     name: Hosted VS2017
 
   steps:  
-  - powershell: |
-      $seed = "$(major).$(minor).$(patch)"
-      $version = $[counter('$seed', 0)]
-      Write-Host $version
-    displayName: Version Sandbox
-
   - task: Npm@1
     displayName: 'npm install Azure DevOps CLI'
     inputs:
