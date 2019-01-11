@@ -10,7 +10,7 @@ trigger:
       - refs/tags/*
 
 variables:
-  version: 1.0.2$(rev:.r)
+  version: "1.0.2$(rev:.r)"
   system.debug: "true"
   githubOrganization: 'HoeflingSoftware'
   githubRepo: 'GitHub-Azure-DevOps-Tasks'
