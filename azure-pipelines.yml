@@ -10,10 +10,7 @@ trigger:
       - refs/tags/*
 
 variables:
-  major: 1
-  minor: 0
-  patch: 0
-  revision: $[counter('versioncounter', 0)]
+  version: 1.0.2$(rev:.r)
   system.debug: "true"
   githubOrganization: 'HoeflingSoftware'
   githubRepo: 'GitHub-Azure-DevOps-Tasks'
@@ -41,7 +38,7 @@ jobs:
       Write-Host "$config"
       $config | ConvertTo-Json -Depth 10 | Set-Content $(Build.SourcesDirectory)\vss-extension.json
     env:
-      VERSION: $(major).$(minor).$(patch).$(revision)
+      VERSION: $(version)
     displayName: Update Version Number
 
   - powershell: 'tfx extension create --manifest-globs $(Build.SourcesDirectory)\vss-extension.json'
@@ -95,7 +92,7 @@ jobs:
     displayName: 'Archive VSIX'
     inputs:
       rootFolderOrFile: '$(System.DefaultWorkingDirectory)/artifacts'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(major).$(minor).$(patch).$(revision).zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(version).zip'
 
   - task: hoefling-software.GitHubTasks.GitHubPublishReleaseArtifact.GitHubPublishReleaseArtifact@1
     displayName: Publish GitHub Release Artifact
@@ -103,5 +100,5 @@ jobs:
       githubRepo: $(githubRepo)
       githubOrganization: $(githubOrganization)
       githubToken: $(githubToken)
-      artifact: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(major).$(minor).$(patch).$(revision).zip'
-      artifactDisplayName: 'GitHubTasks-$(major).$(minor).$(patch).$(revision).zip'
+      artifact: '$(Build.ArtifactStagingDirectory)/$(githubRepo)_$(version).zip'
+      artifactDisplayName: 'GitHubTasks-$(version).zip'
