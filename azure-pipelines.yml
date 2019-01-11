@@ -36,10 +36,12 @@ jobs:
       $config = Get-Content $(Build.SourcesDirectory)\vss-extension.json -raw | ConvertFrom-Json
       Write-Host "Original Config File"
       Write-Host $config
-      $config.version = $(major).$(minor).$(patch).$(revision)
+      $config.version = $env:VERSION
       Write-Host "Updated Config File"
       Write-Host "$config"
       $config | ConvertTo-Json | Set-Content $(Build.SourcesDirectory)\vss-extension.json
+    env:
+      VERSION: $(major).$(minor).$(patch).$(revision)
     displayName: Update Version Number
 
   - powershell: 'tfx extension create --manifest-globs $(Build.SourcesDirectory)\vss-extension.json'
