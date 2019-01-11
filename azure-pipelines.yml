@@ -92,7 +92,7 @@ jobs:
     displayName: 'Update CHANGELOG.md'
 
   - task: hoefling-software.GitHubTasks.GitHubPublishReleaseArtifact.GitHubPublishReleaseArtifact@1
-    displayName: GitHubReleaseARtifact
+    displayName: GitHubReleaseArtifact
     inputs:
       githubRepo: $(githubRepo)
       githubOrganization: $(githubOrganization)
