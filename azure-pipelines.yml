@@ -12,7 +12,7 @@ trigger:
 variables:
   major: 1
   minor: 0
-  patch: 2
+  patch: 3
   revision: "$[counter('$(major).$(minor).$(patch)', 0)]"
   system.debug: "true"
   githubOrganization: 'HoeflingSoftware'
