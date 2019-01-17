@@ -18,7 +18,7 @@
         "Minor": 0,
         "Patch": 0
     },
-    "instanceNameFormat": "GitHubReleaseARtifact",
+    "instanceNameFormat": "GitHubReleaseArtifact",
     "groups": [
         {
             "name": "advanced",
