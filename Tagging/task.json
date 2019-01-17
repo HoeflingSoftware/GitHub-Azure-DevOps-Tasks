@@ -90,14 +90,6 @@
             "defaultValue": "",
             "required": false,
             "helpMarkDown": "The email to display in source control"
-        },
-        {
-            "name": "taggerDate",
-            "type": "string",
-            "label": "Commit Tag - Date",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "The date to display in source control"
         }
     ],
     "execution": {
