@@ -1,7 +1,7 @@
 {
 	"manifestVersion": 1,
 	"id": "GitHubTasks",
-	"version": "1.0.0",
+	"version": "1.0.4",
 	"name": "GitHub Azure DevOps Tasks",
 	"description": "A suite of Azure DevOps tasks for GitHub",
 	"publisher": "hoefling-software",
@@ -30,13 +30,26 @@
 				"ms.vss-distributed-task.tasks"
 			],
 			"properties": {
-				"name": "buildtask"
+				"name": "Artifacts"
+			}
+		},
+		{
+			"id": "GitHubTagging",
+			"type": "ms.vss-distributed-task.task",
+			"targets": [
+				"ms.vss-distributed-task.tasks"
+			],
+			"properties": {
+				"name": "Tagging"
 			}
 		}
 	],
 	"files":[
 		{
-			"path": "buildtask"	
+			"path": "Artifacts"	
+		},
+		{
+			"path": "Tagging"
 		}
 	]
 }
